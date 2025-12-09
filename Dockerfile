@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installiamo le dipendenze
-RUN npm ci
+RUN npm install
 
 # Copiamo il resto del codice
 COPY . .
@@ -22,4 +22,5 @@ USER pptruser
 EXPOSE 3000
 
 # Avviamo il server
+
 CMD ["node", "server.js"]
