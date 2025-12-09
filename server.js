@@ -30,13 +30,15 @@ app.post('/generate-pdf', async (req, res) => {
     try {
         console.log("Inizio generazione PDF...");
         
-        // 2. Avvio Chrome (impostazioni ottimizzate per Docker)
+       // 2. Avvio Chrome (impostazioni ottimizzate per Docker)
         const browser = await puppeteer.launch({
             headless: true,
+            // QUESTA È LA RIGA CHE MANCAVA:
+            executablePath: '/usr/bin/google-chrome-stable', 
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage', // Fondamentale per evitare crash di memoria
+                '--disable-dev-shm-usage',
                 '--disable-gpu'
             ]
         });
@@ -71,5 +73,6 @@ app.post('/generate-pdf', async (req, res) => {
         res.status(500).send('Errore interno: ' + e.message);
     }
 });
+
 
 app.listen(PORT, () => console.log(`Server PDF avviato sulla porta ${PORT}`));
